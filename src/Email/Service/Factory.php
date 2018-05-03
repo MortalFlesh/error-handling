@@ -16,8 +16,10 @@ class Factory
 
     public function createEmail(string $emailValue): ?Email
     {
-        return $this->validator->isValidEmail($emailValue)
-            ? new Email($emailValue)
-            : null;
+        if ($this->validator->isValidEmail($emailValue)) {
+            return new Email($emailValue);
+        }
+
+        throw new \Exception('Email is not valid.');
     }
 }
