@@ -16,8 +16,8 @@ class EmailFacade
         $this->factory = new Factory(new Validator());
     }
 
-    public function createEmail(string $emailValue): ?Email
+    public function createEmail(string $emailValue, callable $failure): ?Email
     {
-        return $this->factory->createEmail($emailValue);
+        return $this->factory->createEmail($emailValue, $failure);
     }
 }

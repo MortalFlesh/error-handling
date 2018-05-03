@@ -6,16 +6,17 @@ require_once __DIR__ . '/../vendor/autoload.php';
 [$_, $emailValue] = $argv;
 
 // application
-$emailFacade = new \MF\ErrorHandling\Email\Facade\EmailFacade();
-try {
-    $email = $emailFacade->createEmail($emailValue);
+use MF\ErrorHandling\Email\Entity\Email;
 
-    $result = $email
-        ? $email->getValue()
-        : 'Invalid';
-} catch (\Throwable $e) {
-    $result = 'Invalid';
-}
+$emailFacade = new \MF\ErrorHandling\Email\Facade\EmailFacade();
+$email = $emailFacade->createEmail($emailValue, function(string $emailValue): ?Email {
+    // I don't care...
+    return null;
+});
+
+$result = $email
+    ? $email->getValue()
+    : 'Invalid';
 
 // output
 echo sprintf('Value "%s" is email "%s".' . PHP_EOL, $emailValue, $result);
