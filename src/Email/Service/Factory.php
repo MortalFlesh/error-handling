@@ -6,11 +6,17 @@ use MF\ErrorHandling\Email\Entity\Email;
 
 class Factory
 {
+    /** @var Validator */
+    private $validator;
+
+    public function __construct(Validator $validator)
+    {
+        $this->validator = $validator;
+    }
+
     public function createEmail(string $emailValue): ?Email
     {
-        $validator = new Validator();
-
-        return $validator->isValidEmail($emailValue)
+        return $this->validator->isValidEmail($emailValue)
             ? new Email($emailValue)
             : null;
     }
